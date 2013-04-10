@@ -10,7 +10,7 @@ if not settings.configured:
     settings.configure(
         ROOT_URLCONF='',
         DATABASE_ENGINE='sqlite3',
-        PAYPAL_RECEIVER_EMAIL='test@example.com',
+        PAYPAL_RECEIVER_EMAIL=set('test@example.com'),
         PAYPAL_TEST=True,
         # Please dont make me create another test account and remove this from here :)
         PAYPAL_WPP_USER='dcrame_1278645792_biz_api1.gmail.com',
@@ -24,7 +24,7 @@ if not settings.configured:
         ]
     )
 
-from django.test.simple import run_tests
+from django.test.simple import DjangoTestSuiteRunner
 
 
 def runtests(*test_args):
@@ -32,7 +32,7 @@ def runtests(*test_args):
         test_args = ['pro', 'standard', 'ipn']
     parent = dirname(abspath(__file__))
     sys.path.insert(0, parent)
-    failures = run_tests(test_args, verbosity=1, interactive=True)
+    failures = DjangoTestSuiteRunner().run_tests(test_args, verbosity=1, interactive=True)
     sys.exit(failures)
 
 
